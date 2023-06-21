@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid bg-dark h-100">
+	<div class="row align-items-center justify-content-center h-100">
+		<div class="col-md-3">
+			<div class="card text-bg-light">
+				<div class="card-header shadow border-0 text-center">
+					<h3>Sign Up</h3>
+				</div>
+				<div class="card-body">
+					<form method="post">
+						{% csrf_token %}
+						<div class="mb-3">
+							<input type="text" class="form-control shadow" placeholder="First Name" id="first_name" name="first_name">
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control shadow" placeholder="Last Name" id="last_name" name="last_name">
+						</div>
+						<div class="mb-3">
+							<input type="email" class="form-control shadow" placeholder="Email address" id="email" name="email">
+						</div>
+						<div class="mb-3">
+							<input type="text" class="form-control shadow" placeholder="Phone number" id="phone" name="phone">
+						</div>
+						<div class="mb-3">
+							<select class="form-select shadow" aria-label="Default select example" name="role">
+								<option selected>Select your role</option>
+								<option value="doctor">Doctor</option>
+								<option value="patient">Patient</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<input type="password" class="form-control shadow" placeholder="password" id="password" name="password">
+						</div>
+						<button type="submit" class="btn btn-primary w-100">Sign Up</button>
+						<p class="text-center mb-0">Login <a href="{% url 'login' %}">here</a></p>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% if error %}<script>alert("{{ error }}")</script>{% endif %}
+{% endblock %}
