@@ -1,0 +1,54 @@
+{% extends 'base_doctor.html' %}
+
+{% block content %}
+<div class="container-fluid bg-dark h-100">
+	<div class="row align-items-center justify-content-center h-100">
+		<div class="col-md-3">
+			<div class="card text-bg-light">
+				<div class="card-header shadow border-0 text-center">
+					<h3>Appointment</h3>
+				</div>
+				<div class="card-body">
+                    <div class="mb-3">
+                        <label for="patient">Patient's Name</label>
+                        <input type="text" class="form-control shadow" name="patient" value="{{ appointment.patient_name }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date">Appointment Date</label>
+                        <input type="text" class="form-control shadow" name="date" value="{{ appointment.date }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="time">Appointment Time</label>
+                        <input type="text" class="form-control shadow" name="time" value="{{ appointment.time }}" disabled>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="patient_remarks" class="form-label">Patient's Remarks</label>
+                        <textarea class="form-control" id="patient_remarks" name="patient_remarks" disabled rows="3">{{ appointment.patient_remarks }}</textarea>
+                    </div>
+                    {% if appointment.is_completed %}
+                    <div class="form-group mb-3">
+                        <label for="doctor_remarks" class="form-label">Doctor's Remarks</label>
+                        <textarea class="form-control" id="doctor_remarks" name="doctor_remarks" disabled rows="3">{{ appointment.doctor_remarks }}</textarea>
+                    </div>
+                    {% endif %}
+                    <div class="row">
+                        {% if appointment.status == 'pending' %}
+                        <div class="col-6">
+                            <a href="{% url 'reject_appointment_doctor' appointment.id %}" type="submit" class="btn btn-danger w-100">Reject</a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{% url 'accept_appointment_doctor' appointment.id %}" type="submit" class="btn btn-success w-100">Accept</a>
+                        </div>
+                        {% elif appointment.status == 'accepted' %}
+                        <div class="col-12">
+                            <a href="{% url 'complete_appointment_doctor' appointment.id %}" type="submit" class="btn btn-primary w-100">Add Remarks</a>
+                        </div>
+                        {% endif %}
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% if error %}<script>alert("{{ error }}")</script>{% endif %}
+{% endblock %}

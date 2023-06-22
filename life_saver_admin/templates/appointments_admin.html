@@ -1,0 +1,32 @@
+{% extends 'base_admin.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4">List of Doctors</h1>
+    <table id="myTable" class="table table-striped table-info">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Patient</th>
+                <th class="text-center">Date</th>
+                <th class="text-center">Time</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr class="text-center">
+                <td>{{ forloop.counter }}</td>
+                <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}
+                </td>
+                <td>{{ appointment.date }}</td>
+                <td>{{ appointment.time }}</td>
+                <td>
+                    <a href="{% url 'appointment_admin' appointment.id %}" class="btn btn-info"><i class="bi bi-eye"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

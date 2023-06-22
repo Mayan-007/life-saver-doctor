@@ -7,6 +7,8 @@ class Appointment(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
+    patient_remarks = models.TextField(blank=True, null=True)
+    doctor_remarks = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=50, default='pending')
     is_completed = models.BooleanField(default=False)
     

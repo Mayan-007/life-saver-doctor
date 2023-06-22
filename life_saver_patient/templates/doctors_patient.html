@@ -27,7 +27,7 @@
                 <td>{{ doctor.qualification }}</td>
                 <td>{{ doctor.fees }}</td>
                 <td>
-                    <a href="" class="btn btn-primary"><i class="bi bi-calendar"></i> Book Appointment</a>
+                    <a href="{% url 'book_appointment_patient' doctor.user.id %}" class="btn btn-primary"><i class="bi bi-calendar"></i> Book Appointment</a>
                 </td>
             </tr>
             {% endfor %}
