@@ -42,4 +42,16 @@ def profile_completion(request):
     return redirect('login')
 
 def waitlist(request):
-    return render(request, 'waitlist_doctor.html')
+    if request.session.has_key('user'):
+        user = User.objects.get(id=request.session['user'])
+        if user.role == 'doctor':
+            try:
+                doctor = Doctor.objects.get(user=user)
+                if doctor.is_verified:
+                    return redirect('index_doctor')
+                return render(request, 'waitlist_doctor.html', {'user': user})
+            except:
+                return redirect('profile_completion_doctor')
+        else:
+            del request.session['user']
+    return redirect('login')

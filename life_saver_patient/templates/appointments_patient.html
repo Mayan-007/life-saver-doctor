@@ -1,0 +1,78 @@
+{% extends 'base_patient.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center my-4">List of Appointments</h1>
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Requested Appointments</h2>
+                </div>
+                <div class="card-body">
+                    <table id="myTable1" class="table table-striped table-info">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Doctor</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Time</th>
+                                <th class="text-center">status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in requestedAppointments %}
+                            <tr class="text-center">
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}
+                                </td>
+                                <td>{{ appointment.date }}</td>
+                                <td>{{ appointment.time }}</td>
+                                {% if appointment.status == 'pending' %}
+                                <td class="text-warning">{{ appointment.status }}</td>
+                                {% elif appointment.status == 'accepted' %}
+                                <td class="text-success">{{ appointment.status }}</td>
+                                {% elif appointment.status == 'rejected' %}
+                                <td class="text-danger">{{ appointment.status }}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Previous Appointments</h2>
+                </div>
+                <div class="card-body">
+                    <table id="myTable2" class="table table-striped table-info">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Doctor</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in previousAppointments %}
+                            <tr class="text-center">
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}
+                                </td>
+                                <td>{{ appointment.date }}</td>
+                                <td>{{ appointment.time }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
