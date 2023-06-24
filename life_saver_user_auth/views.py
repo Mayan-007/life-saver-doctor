@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from life_saver_user_auth.forms import UserForm
+from life_saver_user_auth.forms import UserForm, ContactForm
 from life_saver_user_auth.models import User
 
 def index(request):
@@ -9,6 +9,12 @@ def about(request):
     return render(request, 'about.html')
 
 def contact(request):
+    if request.method == 'POST':
+        print(request.POST)
+    contact = ContactForm(request.POST or None)
+    if contact.is_valid():
+        contact.save()
+        return redirect('index')
     return render(request, 'contact.html')
 
 def login(request):
@@ -18,6 +24,7 @@ def login(request):
         try:
             user = User.objects.get(email=email, password=password)
             request.session['user'] = user.id
+            request.session['username'] = user.first_name + ' ' + user.last_name
             if user.role == 'admin':
                 return redirect('index_admin')
             elif user.role == 'patient':
